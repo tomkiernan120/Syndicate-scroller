@@ -25,23 +25,21 @@
 			$this.binds($this,o);
 			$this.scrollForward($this,o);
 		},
-		pause: function(obj){
-			clearInterval(obj.scrollForward());
-		},
 		scrollForward: function(obj, options) {
 			var $this = $(this);
 			var children = obj.children();
-			var height = children.first().innerHeight();
+			var height = children.first().outerHeight(true);
+			console.log(height);
 			var time = height / (options.speed / 10000);
 			children.first().animate({
 				marginTop: -height
 			}, time, 'linear', function() {
-				var first = $this.children().first();
+				var first = obj.children().first();
 				first.remove();
 				first.removeAttr('style');
 				$this.append(first);
 				running = 1;
-				$this.scrollForward($this, options);
+				$this.scrollForward(obj, options);
 			});
 		},
 		scrollBackward: function(obj, options) {
